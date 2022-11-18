@@ -14,14 +14,15 @@ async function onCommand(command, tab) {
         case 'save_page':{
             const { url='', id } = tab || await currentTab()
 
+            // DISABLED
             //save highlight if text is selected
-            const [res] = await browser.scripting.executeScript({
-                target : {tabId : id},
-                func: getSelectedText,
-                injectImmediately: true
-            })
-            if (res?.result)
-                return addCurrentTabSelection()
+            // const [res] = await browser.scripting.executeScript({
+            //     target : {tabId : id},
+            //     func: getSelectedText,
+            //     injectImmediately: true
+            // })
+            // if (res?.result)
+            //     return addCurrentTabSelection()
 
             return open(`/add?link=${encodeURIComponent(url)}`)
         }
