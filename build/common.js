@@ -14,11 +14,11 @@ module.exports = ({ production, filename='[name].[contenthash]', sentry={} }, { 
 	mode:		production ? 'production' : 'development',
 	context:	path.resolve(__dirname, '../src'),
 	devtool:	production ? 'source-map' : 'eval-cheap-module-source-map',
-	
+
 	entry: {
 		app: './index.js'
 	},
-	
+
 	output: {
 		filename:	`assets/${filename}.js`,
 		clean:		true
@@ -92,19 +92,19 @@ module.exports = ({ production, filename='[name].[contenthash]', sentry={} }, { 
 		]),
 
 		//Sentry
-		...(production && !sentry?.disabled ? [
-			new SentryCliPlugin({
-				org: 'oblako-corp',
-				project: 'app',
-				authToken: process.env.SENTRY_AUTH_TOKEN, //required in CI environment
-				release: process.env.SENTRY_RELEASE,
+		// ...(production && !sentry?.disabled ? [
+		// 	new SentryCliPlugin({
+		// 		org: 'oblako-corp',
+		// 		project: 'app',
+		// 		authToken: process.env.SENTRY_AUTH_TOKEN, //required in CI environment
+		// 		release: process.env.SENTRY_RELEASE,
 
-				include: './src',
-				ignore: [ 'node_modules', 'build', 'dist' ],
-				configFile: path.resolve(__dirname, 'sentry.properties'),
-				...sentry
-			})
-		]: []),
+		// 		include: './src',
+		// 		ignore: [ 'node_modules', 'build', 'dist' ],
+		// 		configFile: path.resolve(__dirname, 'sentry.properties'),
+		// 		...sentry
+		// 	})
+		// ]: []),
 
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify(production?'production':'development'),
