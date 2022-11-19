@@ -8,7 +8,7 @@ export default function AddContent({ item }) {
             
             new={{ item, autoCreate: true }}
 
-            autoFocus='title'
+            autoFocus='tags'
             autoWindowClose />
     )
 }
