@@ -14,6 +14,7 @@ import Link from './link'
 import Reminder from './reminder'
 import Important from './important'
 import Date from './date'
+import browser from '~target/extension/browser'
 
 export default function BookmarkEditForm(props) {
     const dispatch = useDispatch()
@@ -24,10 +25,15 @@ export default function BookmarkEditForm(props) {
         [props.item._id, props.item.media]
     )
 
-    const onSubmitForm = useCallback(e=>{
+    const onSubmitForm = useCallback(async e=>{
         e.preventDefault()
         e.stopPropagation()
         
+        if (props.item.excerpt === 'null') {
+            await props.onChange({excerpt: ''})
+        }
+        await browser.runtime.sendMessage(null, { type: 'BOOKMARK_SUBMITTED', url: props.item.link })
+
         props.onSave().then(()=>{
             if (props.autoWindowClose)
                 window.close()
